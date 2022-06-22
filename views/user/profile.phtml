@@ -1,0 +1,117 @@
+<?php 
+if(isset($params) && !empty($params)){
+  if(isset($params['profile'])){
+    $profile = $params['profile']; 
+  }
+  if(isset($params['profile'])){
+    $user = $params['user']; 
+  }
+
+  if(isset($profile->username) && !empty($profile->username)){
+    $profile_username = $profile->username;
+      $profile_username = substr($profile->username, 1);
+  }
+  else{
+      $profile_username = '';
+  }
+
+  if(isset($params['count'])){
+    $count = $params['count'];
+  }
+  if(isset($params['usrnm'])){
+    $ursnm = $params['usrnm'];
+  }
+ 
+?>
+<?php
+if(isset($_SESSION['username']) && !empty($_SESSION['username'])){
+  $user_username = $_SESSION['username'];
+    $user_username = substr($user_username, 1);
+}
+else{
+    $user_username = '';
+}
+
+?>
+
+<!-- ?= var_dump($_SESSION); ?> -->
+                                            
+<div class="HeadContain">
+      <div class="GoBack">
+      <div class="arrow">
+      <button id="arrowBack" class="item-iconn btn"><ion-icon name="arrow-back-outline"></ion-icon></button>
+      </div>
+      
+      <div class="NAMECOUNT">
+        <div class="HeadName">
+          <p class="HeadNamee"><?= $profile->name ?? 'Profile' ?></p>
+        </div>
+        <div ContainCount>
+          <p class="NumTweet"><?=$params['count']['countTweet'] ?? 0 ?> tweet</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+    <div class="ContainBanner">
+          <img class="BannerImg" src="<?= SCRIPTS ?>assets/bannerImg/D-jnKUPU4AE3hVR.jpg">
+    </div>
+    <div class="ContainProfilePic">
+      <img class="ProfilePic" height="95px" src="<?= SCRIPTS ?>assets/Profile_IMG/5f41b81d5705e.jpeg" width="95px">
+    </div>
+    <div class="ContainInfo">
+      <?php if($profile->id == $user->id){ ?>
+         <div class="EditButton">
+               <a class="ButtEdit" href="<?= BASE_NAME.$user_username.'/edit' ?>">edit profile</a>
+         </div>
+      <?php } else {?>
+        <div class="EditButton">
+          <button class="Followw">follow</button>
+        </div>
+      <?php } ?>
+
+         <div class="elementName">
+               <div class="profileName"><p class="HeadNamee"><?= $profile->name ?? '' ?></p></div>
+               <div class="profileUsername"><p class="usernameUse">@<?= $profile->username ?? $ursnm && !empty($ursnm) ? $ursnm : '' ?></p></div>
+         </div>
+  <?php if(isset($params['profile']) && !empty($params['profile'])){ ?>
+         <div class="ContainLocation">
+               <div class="Location">
+                     <div class="iconLocation"><ion-icon name="location-outline"></ion-icon></div>
+                     <p class="PLocation">Paris, France</p>
+               </div>
+               <div class="DateJoin">
+                     <div><p class="PDate"> <ion-icon name="calendar-outline"></ion-icon> Joined <?= date('F Y',strtotime($profile->register_date)) ?> </p></div>
+               </div>
+         </div>
+         <div class="ContainFollow">
+               <div class="Following">
+                     <a class="LinkFollowing" href="<?= BASE_NAME . $ursnm.'/followers'?>"> <?= $count['countFollower'] ?? 0 ?>  Following</a>
+               </div>
+               <div class="Followers">
+                     <a class="LinkFollowers" href="<?= BASE_NAME .$ursnm.'/followers'?>"><?=$count['countFollow'] ?? 0?> Followers</a>
+               </div>
+         </div>
+
+         <nav class="NavProfile">
+              <div class="ContainTweetsPro">
+                   <a class="linkTweetsPro" href="#">Tweets</a>
+              </div>
+              <div class="ContainReplies">
+                  <a class="linkReplies" href="#">Tweets & replies</a>
+              </div>
+           <div class="ContainMedia">
+             <a class="linkMedia" href="#">Media</a>
+           </div>
+           <div class="ContainLikes">
+             <a class="linkReplies" href="#">Likes</a>
+           </div>
+         </nav>
+         <?php } ?>
+    </div>
+    <div class="ShowXTweet">
+      <button class="SHOW">Show xx Tweets</button>
+    </div>
+    
+    <?php } ?>
